@@ -493,15 +493,15 @@ async function generateCard() {
     // 画像生成対応モデルの候補（優先順）
     const IMAGE_MODEL_KEYWORDS = [
       'gemini-3.1-flash-image',
+      'gemini-3-flash-image',
       'gemini-3-pro-image',
       'gemini-2.5-flash-image',
       'gemini-2.0-flash-preview-image',
       'gemini-2.0-flash-exp',
-      'imagen',
     ];
     const candidateModels = [];
     for (const keyword of IMAGE_MODEL_KEYWORDS) {
-      const found = allModels.find(m => m.includes(keyword));
+      const found = allModels.find(m => m.includes(keyword) && !m.includes('imagen'));
       if (found && !candidateModels.includes(found)) candidateModels.push(found);
     }
 
@@ -544,7 +544,9 @@ Instructions:
                 { text: prompt }
               ]
             }],
-            generationConfig: { responseModalities: ['IMAGE', 'TEXT'] }
+            generation_config: {
+              response_modalities: ['IMAGE', 'TEXT']
+            }
           })
         }
       );
@@ -552,9 +554,9 @@ Instructions:
         data = await resp.json();
         break;
       } else {
-        const err = await resp.json().catch(() => ({}));
-        lastError = err.error?.message || `HTTP ${resp.status}`;
-        console.warn(`${model} 失敗:`, lastError);
+        const errBody = await resp.json().catch(() => ({}));
+        lastError = errBody.error?.message || `HTTP ${resp.status}`;
+        console.warn(`❌ ${model} 失敗 (${resp.status}):`, lastError);
       }
     }
 
