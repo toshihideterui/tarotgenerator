@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarot Atelier — オリジナルカードメーカー</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a0e2e;
+    --parchment: #f5ead8;
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --deep: #0d0720;
+    --accent: #7c3aed;
+    --mist: #e8e0f0;
+    --card-w: 280px;
+    --card-h: 480px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--deep);
+    color: var(--parchment);
+    font-family: 'Noto Serif JP', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 50% 30%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 60% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 70%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  header h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 30px rgba(201,168,76,0.4);
+    margin-bottom: 8px;
+  }
+
+  header p {
+    font-size: 0.85rem;
+    color: rgba(245,234,216,0.5);
+    letter-spacing: 0.15em;
+    font-family: 'Cinzel', serif;
+  }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.4;
+  }
+  .divider span {
+    color: var(--gold);
+    font-size: 1rem;
+    opacity: 0.7;
+  }
+
+  /* Steps layout */
+  .steps {
+    display: grid;
+    gap: 28px;
+  }
+
+  .step-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    padding: 24px;
+    backdrop-filter: blur(4px);
+  }
+
+  .step-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .step-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+  }
+
+  /* Card selector */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 8px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 4px;
+  }
+
+  .card-grid::-webkit-scrollbar { width: 4px; }
+  .card-grid::-webkit-scrollbar-track { background: transparent; }
+  .card-grid::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 2px; }
+
+  .card-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px;
+    padding: 8px 4px;
+    cursor: pointer;
+    color: var(--parchment);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.65rem;
+    text-align: center;
+    line-height: 1.4;
+    transition: all 0.2s;
+  }
+
+  .card-btn:hover {
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(201,168,76,0.08);
+  }
+
+  .card-btn.selected {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.15);
+    color: var(--gold-light);
+  }
+
+  .card-btn .roman {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 2px;
+  }
+
+  /* Tab switcher */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(245,234,216,0.5);
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-btn.active {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Upload area */
+  .upload-area {
+    border: 2px dashed rgba(201,168,76,0.3);
+    border-radius: 10px;
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .upload-area:hover {
+    border-color: rgba(201,168,76,0.6);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .upload-icon { font-size: 2rem; margin-bottom: 8px; }
+  .upload-text { font-size: 0.8rem; color: rgba(245,234,216,0.6); }
+
+  /* AI prompt */
+  .prompt-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--parchment);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.85rem;
+    resize: none;
+    height: 80px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  textarea:focus { border-color: rgba(201,168,76,0.5); }
+  textarea::placeholder { color: rgba(245,234,216,0.3); }
+
+  /* Blend controls */
+  .blend-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .control-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .control-label {
+    font-size: 0.75rem;
+    color: rgba(245,234,216,0.6);
+    width: 100px;
+    flex-shrink: 0;
+  }
+
+  input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 3px;
+    background: rgba(201,168,76,0.2);
+    border-radius: 2px;
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+  }
+
+  .control-value {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    width: 36px;
+    text-align: right;
+  }
+
+  select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: var(--parchment);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    outline: none;
+    flex: 1;
+  }
+
+  select option { background: #1a0e2e; }
+
+  /* Preview area */
+  .preview-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .canvas-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  canvas {
+    border-radius: 16px;
+    box-shadow: 0 0 60px rgba(201,168,76,0.15), 0 20px 60px rgba(0,0,0,0.5);
+    max-width: 100%;
+  }
+
+  .preview-placeholder {
+    width: var(--card-w);
+    height: var(--card-h);
+    border: 2px dashed rgba(201,168,76,0.2);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(245,234,216,0.3);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .preview-placeholder .big { font-size: 2.5rem; }
+
+  /* Buttons */
+  .btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), #a87830);
+    color: var(--deep);
+    font-weight: 700;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    box-shadow: 0 0 20px rgba(201,168,76,0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  .btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .action-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Main layout */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  @media (min-width: 700px) {
+    .main-layout {
+      grid-template-columns: 1fr 320px;
+    }
+  }
+
+  .controls-col { display: flex; flex-direction: column; gap: 28px; }
+
+  /* Loading */
+  .loading {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(13,7,32,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .loading.show { display: flex; }
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid rgba(201,168,76,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading p {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  /* Status */
+  .status {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(245,234,216,0.5);
+    min-height: 20px;
+  }
+
+  .status.error { color: #f87171; }
+  .status.success { color: #86efac; }
+</style>
+</head>
+<body>
+
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <p>GENERATING...</p>
+</div>
+
+<div class="container">
+  <header>
+    <h1>✦ Tarot Atelier ✦</h1>
+    <p>ORIGINAL CARD CREATOR</p>
+  </header>
+
+  <div class="main-layout">
+    <div class="controls-col">
+
+      <!-- Step 1: Card select -->
+      <div class="step-card">
+        <div class="step-label">Step I</div>
+        <div class="step-title">アルカナを選ぶ</div>
+        <div class="card-grid" id="cardGrid"></div>
+      </div>
+
+      <!-- Step 2: Image input -->
+      <div class="step-card">
+        <div class="step-label">Step II</div>
+        <div class="step-title">重ねる画像を用意する</div>
+
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('upload')">写真・イラスト</button>
+          <button class="tab-btn" onclick="switchTab('ai')">AIで生成</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-upload">
+          <input type="file" accept="image/*" id="fileInput" onchange="handleFile(event)" style="display:none">
+          <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">🖼</div>
+            <div class="upload-text">タップして画像を選択<br><small>JPG / PNG / WebP</small></div>
+          </div>
+          <p id="uploadStatus" class="status" style="margin-top:8px"></p>
+        </div>
+
+        <div class="tab-panel" id="tab-ai">
+          <div class="prompt-area">
+            <input type="password" id="apiKey" placeholder="Anthropic APIキーを入力 (sk-ant-...)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:10px 12px;color:var(--parchment);font-family:'Noto Serif JP',serif;font-size:0.8rem;outline:none;width:100%;">
+            <textarea id="aiPrompt" placeholder="例：夜空に浮かぶ満月、神秘的な森の中の魔女、宇宙を旅する旅人…"></textarea>
+            <button class="btn btn-primary" onclick="generateAI()">✦ AIで画像生成</button>
+            <p id="aiStatus" class="status"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Blend settings -->
+      <div class="step-card">
+        <div class="step-label">Step III</div>
+        <div class="step-title">合成の調整</div>
+        <div class="blend-controls">
+          <div class="control-row">
+            <span class="control-label">原画の透明度</span>
+            <input type="range" id="arcanaOpacity" min="0" max="100" value="60" oninput="updatePreview(); this.nextElementSibling.textContent=this.value+'%'">
+            <span class="control-value">60%</span>
+          </div>
+          <div class="control-row">
+            <span class="control-label">画像の透明度</span>
+            <input type="range" id="photoOpacity" min="0" max="100" value="80" oninput="updatePreview(); this.nextElementSibling.textContent=this.value+'%'">
+            <span class="control-value">80%</span>
+          </div>
+          <div class="control-row">
+            <span class="control-label">合成モード</span>
+            <select id="blendMode" onchange="updatePreview()">
+              <option value="normal">通常 (Normal)</option>
+              <option value="multiply">乗算 (Multiply)</option>
+              <option value="screen">スクリーン (Screen)</option>
+              <option value="overlay" selected>オーバーレイ (Overlay)</option>
+              <option value="soft-light">ソフトライト</option>
+              <option value="hard-light">ハードライト</option>
+              <option value="color-dodge">覆い焼き</option>
+              <option value="luminosity">輝度</option>
+            </select>
+          </div>
+          <div class="control-row">
+            <span class="control-label">フィルター</span>
+            <select id="filterMode" onchange="updatePreview()">
+              <option value="none">なし</option>
+              <option value="sepia">セピア</option>
+              <option value="aged">アンティーク</option>
+              <option value="moonlight">月光</option>
+              <option value="shadow">シャドウ</option>
+            </select>
+          </div>
+          <div class="control-row">
+            <span class="control-label">カード名表示</span>
+            <select id="showName" onchange="updatePreview()">
+              <option value="both">日本語 + 英語</option>
+              <option value="ja">日本語のみ</option>
+              <option value="en">英語のみ</option>
+              <option value="none">なし</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="step-card preview-section" style="align-self:start; position:sticky; top:20px;">
+      <div class="step-label" style="text-align:center">プレビュー</div>
+      <div class="canvas-wrap">
+        <div class="preview-placeholder" id="placeholder">
+          <span class="big">✦</span>
+          <span>カードを選んで<br>画像を設定すると<br>ここに表示されます</span>
+        </div>
+        <canvas id="canvas" width="280" height="480" style="display:none"></canvas>
+      </div>
+      <div class="action-row">
+        <button class="btn btn-primary" id="btnGenerate" onclick="updatePreview()" disabled>▶ プレビュー更新</button>
+      </div>
+      <div class="action-row">
+        <button class="btn btn-secondary" id="btnPng" onclick="downloadCard('png')" disabled>PNG保存</button>
+        <button class="btn btn-secondary" id="btnJpg" onclick="downloadCard('jpg')" disabled>JPG保存</button>
+        <button class="btn btn-secondary" id="btnShare" onclick="shareCard()" disabled>シェア</button>
+      </div>
+      <p id="previewStatus" class="status"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const MAJOR_ARCANA = [
+  { num: 0,  roman: '0',      en: 'The Fool',          ja: '愚者' },
+  { num: 1,  roman: 'I',      en: 'The Magician',      ja: '魔術師' },
+  { num: 2,  roman: 'II',     en: 'High Priestess',    ja: '女教皇' },
+  { num: 3,  roman: 'III',    en: 'The Empress',       ja: '女帝' },
+  { num: 4,  roman: 'IV',     en: 'The Emperor',       ja: '皇帝' },
+  { num: 5,  roman: 'V',      en: 'The Hierophant',    ja: '教皇' },
+  { num: 6,  roman: 'VI',     en: 'The Lovers',        ja: '恋人' },
+  { num: 7,  roman: 'VII',    en: 'The Chariot',       ja: '戦車' },
+  { num: 8,  roman: 'VIII',   en: 'Strength',          ja: '力' },
+  { num: 9,  roman: 'IX',     en: 'The Hermit',        ja: '隠者' },
+  { num: 10, roman: 'X',      en: 'Wheel of Fortune',  ja: '運命の輪' },
+  { num: 11, roman: 'XI',     en: 'Justice',           ja: '正義' },
+  { num: 12, roman: 'XII',    en: 'The Hanged Man',    ja: '吊られた男' },
+  { num: 13, roman: 'XIII',   en: 'Death',             ja: '死神' },
+  { num: 14, roman: 'XIV',    en: 'Temperance',        ja: '節制' },
+  { num: 15, roman: 'XV',     en: 'The Devil',         ja: '悪魔' },
+  { num: 16, roman: 'XVI',    en: 'The Tower',         ja: '塔' },
+  { num: 17, roman: 'XVII',   en: 'The Star',          ja: '星' },
+  { num: 18, roman: 'XVIII',  en: 'The Moon',          ja: '月' },
+  { num: 19, roman: 'XIX',    en: 'The Sun',           ja: '太陽' },
+  { num: 20, roman: 'XX',     en: 'Judgement',         ja: '審判' },
+  { num: 21, roman: 'XXI',    en: 'The World',         ja: '世界' },
+];
+
+// Wikimedia Commons RWS tarot image URLs (public domain)
+function getArcanaImageUrl(num) {
+  const names = [
+    'Fool','Magician','High_Priestess','Empress','Emperor',
+    'Hierophant','Lovers','Chariot','Strength','Hermit',
+    'Wheel_of_Fortune','Justice','Hanged_Man','Death','Temperance',
+    'Devil','Tower','Star','Moon','Sun','Judgement','World'
+  ];
+  return `https://upload.wikimedia.org/wikipedia/commons/thumb/`;
+}
+
+// Use Wikimedia Commons direct paths for RWS deck
+const RWS_PATHS = {
+  0:  'https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg',
+  1:  'https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg',
+  2:  'https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg',
+  3:  'https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg',
+  4:  'https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg',
+  5:  'https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg',
+  6:  'https://upload.wikimedia.org/wikipedia/commons/3/3a/RWS_Tarot_06_Lovers.jpg',
+  7:  'https://upload.wikimedia.org/wikipedia/commons/9/9b/RWS_Tarot_07_Chariot.jpg',
+  8:  'https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg',
+  9:  'https://upload.wikimedia.org/wikipedia/commons/4/4d/RWS_Tarot_09_Hermit.jpg',
+  10: 'https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg',
+  11: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_11_Justice.jpg',
+  12: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg',
+  13: 'https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg',
+  14: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg',
+  15: 'https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg',
+  16: 'https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg',
+  17: 'https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg',
+  18: 'https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg',
+  19: 'https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg',
+  20: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg',
+  21: 'https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg',
+};
+
+let selectedCard = null;
+let userImage = null;
+let arcanaImageCache = {};
+
+// Build card grid
+const grid = document.getElementById('cardGrid');
+MAJOR_ARCANA.forEach(card => {
+  const btn = document.createElement('button');
+  btn.className = 'card-btn';
+  btn.innerHTML = `<span class="roman">${card.roman}</span>${card.ja}`;
+  btn.onclick = () => selectCard(card, btn);
+  grid.appendChild(btn);
+});
+
+function selectCard(card, btn) {
+  selectedCard = card;
+  document.querySelectorAll('.card-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  checkReady();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='upload')||(i===1&&tab==='ai')));
+  document.getElementById('tab-upload').classList.toggle('active', tab==='upload');
+  document.getElementById('tab-ai').classList.toggle('active', tab==='ai');
+}
+
+function handleFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      userImage = img;
+      document.getElementById('uploadStatus').textContent = '✓ 画像を読み込みました';
+      document.getElementById('uploadStatus').className = 'status success';
+      checkReady();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function generateAI() {
+  const prompt = document.getElementById('aiPrompt').value.trim();
+  if (!prompt) { setStatus('aiStatus', 'プロンプトを入力してください', 'error'); return; }
+
+  showLoading(true);
+  setStatus('aiStatus', '');
+
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) { setStatus('aiStatus', 'APIキーを入力してください', 'error'); showLoading(false); return; }
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: `以下のイメージに基づいた、タロットカード風の幻想的なSVG画像を生成してください。
+テーマ：${prompt}
+${selectedCard ? `カード：${selectedCard.ja}（${selectedCard.en}）` : ''}
+
+要件：
+- 280x480のSVG
+- 神秘的・幻想的なタロットカードのスタイル
+- シンプルだが印象的なデザイン
+- 色使いは深みのある色（紺、紫、金、深緑など）
+- 中央にメインのシンボルや人物
+- 装飾的な枠や模様
+- SVGコードのみ出力（説明不要）`
+        }]
+      })
+    });
+    const data = await resp.json();
+    const svgText = data.content.map(b => b.text || '').join('');
+    const svgMatch = svgText.match(/<svg[\s\S]*<\/svg>/i);
+    if (!svgMatch) throw new Error('SVG生成失敗');
+
+    const blob = new Blob([svgMatch[0]], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      userImage = img;
+      setStatus('aiStatus', '✓ 画像を生成しました', 'success');
+      checkReady();
+      showLoading(false);
+    };
+    img.src = url;
+  } catch(e) {
+    setStatus('aiStatus', '生成に失敗しました: ' + e.message, 'error');
+    showLoading(false);
+  }
+}
+
+function checkReady() {
+  const ready = selectedCard && userImage;
+  document.getElementById('btnGenerate').disabled = !ready;
+  if (ready) updatePreview();
+}
+
+async function loadArcanaImage(num) {
+  if (arcanaImageCache[num]) return arcanaImageCache[num];
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => { arcanaImageCache[num] = img; resolve(img); };
+    img.onerror = () => reject(new Error('原画の読み込みに失敗'));
+    img.src = RWS_PATHS[num];
+  });
+}
+
+async function updatePreview() {
+  if (!selectedCard || !userImage) return;
+  showLoading(true);
+
+  try {
+    const arcanaImg = await loadArcanaImage(selectedCard.num);
+    drawCard(arcanaImg);
+    document.getElementById('canvas').style.display = 'block';
+    document.getElementById('placeholder').style.display = 'none';
+    document.getElementById('btnPng').disabled = false;
+    document.getElementById('btnJpg').disabled = false;
+    document.getElementById('btnShare').disabled = false;
+    setStatus('previewStatus', '✓ 生成完了', 'success');
+  } catch(e) {
+    setStatus('previewStatus', '原画の読み込みに失敗。ネット接続を確認してください。', 'error');
+  }
+  showLoading(false);
+}
+
+function drawCard(arcanaImg) {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const arcanaOpacity = document.getElementById('arcanaOpacity').value / 100;
+  const photoOpacity = document.getElementById('photoOpacity').value / 100;
+  const blendMode = document.getElementById('blendMode').value;
+  const filterMode = document.getElementById('filterMode').value;
+  const showName = document.getElementById('showName').value;
+
+  // Base: dark gradient background
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#0d0720');
+  bg.addColorStop(1, '#1a0e2e');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Draw user image (bottom layer)
+  ctx.globalAlpha = photoOpacity;
+  ctx.globalCompositeOperation = 'source-over';
+  drawContain(ctx, userImage, 0, 0, W, H);
+
+  // Draw arcana image (overlay)
+  ctx.globalAlpha = arcanaOpacity;
+  ctx.globalCompositeOperation = blendMode === 'normal' ? 'source-over' : blendMode;
+  drawContain(ctx, arcanaImg, 0, 0, W, H);
+
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+
+  // Apply filter
+  applyFilter(ctx, W, H, filterMode);
+
+  // Card frame
+  drawFrame(ctx, W, H);
+
+  // Card name
+  if (showName !== 'none') {
+    drawCardName(ctx, W, H, showName);
+  }
+}
+
+function drawContain(ctx, img, x, y, w, h) {
+  const scale = Math.max(w / img.width, h / img.height);
+  const sw = img.width * scale;
+  const sh = img.height * scale;
+  const sx = x + (w - sw) / 2;
+  const sy = y + (h - sh) / 2;
+  ctx.drawImage(img, sx, sy, sw, sh);
+}
+
+function applyFilter(ctx, W, H, filter) {
+  if (filter === 'none') return;
+  const imgData = ctx.getImageData(0, 0, W, H);
+  const d = imgData.data;
+
+  for (let i = 0; i < d.length; i += 4) {
+    let r = d[i], g = d[i+1], b = d[i+2];
+    if (filter === 'sepia') {
+      d[i]   = Math.min(255, r*0.393+g*0.769+b*0.189);
+      d[i+1] = Math.min(255, r*0.349+g*0.686+b*0.168);
+      d[i+2] = Math.min(255, r*0.272+g*0.534+b*0.131);
+    } else if (filter === 'aged') {
+      d[i]   = Math.min(255, r*0.5+g*0.3+b*0.1+60);
+      d[i+1] = Math.min(255, r*0.3+g*0.5+b*0.1+40);
+      d[i+2] = Math.min(255, r*0.1+g*0.1+b*0.4+20);
+    } else if (filter === 'moonlight') {
+      d[i]   = Math.min(255, r*0.3+20);
+      d[i+1] = Math.min(255, g*0.4+30);
+      d[i+2] = Math.min(255, b*0.8+60);
+    } else if (filter === 'shadow') {
+      d[i]   = Math.min(255, r*0.5);
+      d[i+1] = Math.min(255, g*0.3);
+      d[i+2] = Math.min(255, b*0.6+20);
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+function drawFrame(ctx, W, H) {
+  const pad = 10;
+  // Outer border
+  ctx.strokeStyle = 'rgba(201,168,76,0.8)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(pad, pad, W-pad*2, H-pad*2);
+
+  // Inner border
+  ctx.strokeStyle = 'rgba(201,168,76,0.35)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(pad+5, pad+5, W-pad*2-10, H-pad*2-10);
+
+  // Corner ornaments
+  const corners = [[pad+2, pad+2], [W-pad-2, pad+2], [pad+2, H-pad-2], [W-pad-2, H-pad-2]];
+  ctx.fillStyle = 'rgba(201,168,76,0.9)';
+  corners.forEach(([x,y]) => {
+    ctx.beginPath();
+    ctx.arc(x, y, 3, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  // Top & bottom decorative band
+  ctx.fillStyle = 'rgba(13,7,32,0.75)';
+  ctx.fillRect(pad+1, pad+1, W-pad*2-2, 32);
+  ctx.fillRect(pad+1, H-pad-33, W-pad*2-2, 32);
+
+  // Roman numeral top center
+  if (selectedCard) {
+    ctx.font = '700 12px "Cinzel", serif';
+    ctx.fillStyle = 'rgba(201,168,76,0.9)';
+    ctx.textAlign = 'center';
+    ctx.fillText(selectedCard.roman, W/2, pad+21);
+  }
+
+  // Side decorative lines
+  ctx.strokeStyle = 'rgba(201,168,76,0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad+12, pad+38); ctx.lineTo(pad+12, H-pad-38); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W-pad-12, pad+38); ctx.lineTo(W-pad-12, H-pad-38); ctx.stroke();
+}
+
+function drawCardName(ctx, W, H, mode) {
+  const pad = 10;
+  ctx.textAlign = 'center';
+
+  if (mode === 'both') {
+    ctx.font = 'bold 13px "Noto Serif JP", serif';
+    ctx.fillStyle = 'rgba(245,234,216,0.95)';
+    ctx.fillText(selectedCard.ja, W/2, H-pad-18);
+    ctx.font = '9px "Cinzel", serif';
+    ctx.fillStyle = 'rgba(201,168,76,0.7)';
+    ctx.fillText(selectedCard.en.toUpperCase(), W/2, H-pad-6);
+  } else if (mode === 'ja') {
+    ctx.font = 'bold 14px "Noto Serif JP", serif';
+    ctx.fillStyle = 'rgba(245,234,216,0.95)';
+    ctx.fillText(selectedCard.ja, W/2, H-pad-10);
+  } else if (mode === 'en') {
+    ctx.font = '10px "Cinzel", serif';
+    ctx.fillStyle = 'rgba(201,168,76,0.85)';
+    ctx.fillText(selectedCard.en.toUpperCase(), W/2, H-pad-10);
+  }
+}
+
+function downloadCard(format) {
+  const canvas = document.getElementById('canvas');
+  const name = selectedCard ? `tarot_${selectedCard.ja}` : 'tarot_card';
+  if (format === 'png') {
+    const a = document.createElement('a');
+    a.download = `${name}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  } else {
+    const a = document.createElement('a');
+    a.download = `${name}.jpg`;
+    a.href = canvas.toDataURL('image/jpeg', 0.92);
+    a.click();
+  }
+}
+
+async function shareCard() {
+  const canvas = document.getElementById('canvas');
+  canvas.toBlob(async (blob) => {
+    const name = selectedCard ? `tarot_${selectedCard.ja}.png` : 'tarot_card.png';
+    const file = new File([blob], name, { type: 'image/png' });
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: `${selectedCard?.ja} — My Tarot Card` });
+      } catch(e) { downloadCard('png'); }
+    } else {
+      downloadCard('png');
+      setStatus('previewStatus', 'シェア未対応のため画像を保存しました', 'success');
+    }
+  });
+}
+
+function showLoading(v) {
+  document.getElementById('loading').classList.toggle('show', v);
+}
+
+function setStatus(id, msg, type='') {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = 'status' + (type ? ' '+type : '');
+}
+</script>
+</body>
+</html>
