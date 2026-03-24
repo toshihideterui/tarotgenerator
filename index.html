@@ -38,17 +38,8 @@
     pointer-events: none;
     z-index: 0;
   }
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 16px 80px;
-  }
-  header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
+  .container { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 40px 16px 80px; }
+  header { text-align: center; margin-bottom: 40px; }
   header h1 {
     font-family: 'Cinzel Decorative', serif;
     font-size: clamp(1.4rem, 4vw, 2.2rem);
@@ -57,43 +48,15 @@
     text-shadow: 0 0 30px rgba(201,168,76,0.4);
     margin-bottom: 6px;
   }
-  header p {
-    font-size: 0.8rem;
-    color: rgba(245,234,216,0.45);
-    letter-spacing: 0.2em;
-    font-family: 'Cinzel', serif;
-  }
-  .main-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  @media (min-width: 680px) {
-    .main-layout { grid-template-columns: 1fr 300px; }
-  }
+  header p { font-size: 0.8rem; color: rgba(245,234,216,0.45); letter-spacing: 0.2em; font-family: 'Cinzel', serif; }
+  .main-layout { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 680px) { .main-layout { grid-template-columns: 1fr 300px; } }
   .controls-col { display: flex; flex-direction: column; gap: 20px; }
-  .step-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.18);
-    border-radius: 12px;
-    padding: 20px;
-  }
-  .step-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    opacity: 0.65;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
-  .step-title {
-    font-family: 'Cinzel', serif;
-    font-size: 0.95rem;
-    color: var(--gold-light);
-    margin-bottom: 14px;
-  }
-  .api-row input {
+  .step-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.18); border-radius: 12px; padding: 20px; }
+  .step-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold); opacity: 0.65; margin-bottom: 6px; text-transform: uppercase; }
+  .step-title { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--gold-light); margin-bottom: 14px; }
+  .step-note { font-size: 0.72rem; color: rgba(245,234,216,0.4); margin-top: 8px; line-height: 1.6; }
+  input[type=password], input[type=text] {
     width: 100%;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(201,168,76,0.2);
@@ -104,180 +67,52 @@
     outline: none;
     font-family: monospace;
   }
-  .api-row input:focus { border-color: rgba(201,168,76,0.5); }
-  .api-row input::placeholder { color: rgba(245,234,216,0.25); }
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
-    gap: 6px;
-    max-height: 240px;
-    overflow-y: auto;
-    padding: 2px;
-  }
+  input[type=password]:focus, input[type=text]:focus { border-color: rgba(201,168,76,0.5); }
+  input::placeholder { color: rgba(245,234,216,0.25); }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(82px, 1fr)); gap: 6px; max-height: 240px; overflow-y: auto; padding: 2px; }
   .card-grid::-webkit-scrollbar { width: 4px; }
   .card-grid::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 2px; }
-  .card-btn {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 7px;
-    padding: 7px 4px;
-    cursor: pointer;
-    color: var(--parchment);
-    font-family: 'Noto Serif JP', serif;
-    font-size: 0.62rem;
-    text-align: center;
-    line-height: 1.4;
-    transition: all 0.15s;
-  }
+  .card-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.12); border-radius: 7px; padding: 7px 4px; cursor: pointer; color: var(--parchment); font-family: 'Noto Serif JP', serif; font-size: 0.62rem; text-align: center; line-height: 1.4; transition: all 0.15s; }
   .card-btn:hover { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.07); }
   .card-btn.selected { border-color: var(--gold); background: rgba(201,168,76,0.14); color: var(--gold-light); }
   .card-btn .roman { display: block; font-family: 'Cinzel', serif; font-size: 0.58rem; color: var(--gold); opacity: 0.7; margin-bottom: 2px; }
-  .upload-area {
-    border: 2px dashed rgba(201,168,76,0.28);
-    border-radius: 10px;
-    padding: 28px 16px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .upload-area { border: 2px dashed rgba(201,168,76,0.28); border-radius: 10px; padding: 28px 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
   .upload-area:hover { border-color: rgba(201,168,76,0.6); background: rgba(201,168,76,0.05); }
   .upload-icon { font-size: 2rem; margin-bottom: 6px; }
   .upload-text { font-size: 0.78rem; color: rgba(245,234,216,0.55); line-height: 1.6; }
-  .upload-preview {
-    margin-top: 12px;
-    display: none;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 8px;
-    padding: 8px 12px;
-  }
+  .upload-preview { margin-top: 12px; display: none; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 8px 12px; }
   .upload-preview img { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(201,168,76,0.3); }
   .upload-preview span { font-size: 0.75rem; color: rgba(245,234,216,0.7); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .upload-preview .remove-btn { cursor: pointer; color: rgba(245,234,216,0.4); font-size: 1.1rem; padding: 0 4px; }
-  .upload-preview .remove-btn:hover { color: #f87171; }
-  .style-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-  .style-btn {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 8px;
-    padding: 10px 8px;
-    cursor: pointer;
-    color: var(--parchment);
-    font-family: 'Noto Serif JP', serif;
-    font-size: 0.72rem;
-    text-align: center;
-    transition: all 0.15s;
-    line-height: 1.5;
-  }
+  .remove-btn { cursor: pointer; color: rgba(245,234,216,0.4); font-size: 1.1rem; padding: 0 4px; flex-shrink: 0; }
+  .remove-btn:hover { color: #f87171; }
+  .style-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .style-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.12); border-radius: 8px; padding: 10px 8px; cursor: pointer; color: var(--parchment); font-family: 'Noto Serif JP', serif; font-size: 0.72rem; text-align: center; transition: all 0.15s; line-height: 1.5; }
   .style-btn:hover { border-color: rgba(201,168,76,0.4); }
   .style-btn.selected { border-color: var(--gold); background: rgba(201,168,76,0.13); color: var(--gold-light); }
-  .style-btn .style-icon { font-size: 1.2rem; display: block; margin-bottom: 3px; }
-  .btn {
-    width: 100%;
-    padding: 13px;
-    border-radius: 9px;
-    font-family: 'Cinzel', serif;
-    font-size: 0.82rem;
-    letter-spacing: 0.12em;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--gold), #a07828);
-    color: var(--deep);
-    font-weight: 700;
-  }
-  .btn-primary:hover:not(:disabled) {
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    box-shadow: 0 0 20px rgba(201,168,76,0.3);
-  }
+  .style-icon { font-size: 1.2rem; display: block; margin-bottom: 3px; }
+  .btn { width: 100%; padding: 13px; border-radius: 9px; font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.12em; cursor: pointer; transition: all 0.2s; border: none; }
+  .btn-primary { background: linear-gradient(135deg, var(--gold), #a07828); color: var(--deep); font-weight: 700; }
+  .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, var(--gold-light), var(--gold)); box-shadow: 0 0 20px rgba(201,168,76,0.3); }
   .btn-primary:disabled { opacity: 0.3; cursor: not-allowed; }
-  .btn-secondary {
-    background: transparent;
-    border: 1px solid rgba(201,168,76,0.35);
-    color: var(--gold);
-    padding: 10px;
-    font-size: 0.75rem;
-  }
+  .btn-secondary { background: transparent; border: 1px solid rgba(201,168,76,0.35); color: var(--gold); padding: 10px; font-size: 0.75rem; }
   .btn-secondary:hover:not(:disabled) { border-color: var(--gold); background: rgba(201,168,76,0.07); }
   .btn-secondary:disabled { opacity: 0.25; cursor: not-allowed; }
-  .preview-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-  .preview-sticky {
-    position: sticky;
-    top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-  }
-  canvas {
-    border-radius: 14px;
-    box-shadow: 0 0 50px rgba(201,168,76,0.12), 0 20px 50px rgba(0,0,0,0.5);
-    display: block;
-    max-width: 100%;
-  }
-  .placeholder-card {
-    width: var(--card-w);
-    height: var(--card-h);
-    border: 2px dashed rgba(201,168,76,0.18);
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: rgba(245,234,216,0.25);
-    font-size: 0.78rem;
-    text-align: center;
-    padding: 20px;
-    line-height: 1.7;
-  }
+  .preview-col { display: flex; flex-direction: column; align-items: center; }
+  .preview-sticky { position: sticky; top: 20px; display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; }
+  canvas { border-radius: 14px; box-shadow: 0 0 50px rgba(201,168,76,0.12), 0 20px 50px rgba(0,0,0,0.5); display: block; max-width: 100%; }
+  .placeholder-card { width: var(--card-w); height: var(--card-h); border: 2px dashed rgba(201,168,76,0.18); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: rgba(245,234,216,0.25); font-size: 0.78rem; text-align: center; padding: 20px; line-height: 1.7; }
   .placeholder-card .big { font-size: 2.5rem; }
-  .action-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-    width: 100%;
-    max-width: var(--card-w);
-  }
+  .action-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; width: 100%; max-width: var(--card-w); }
   .status { font-size: 0.73rem; color: rgba(245,234,216,0.45); min-height: 18px; text-align: center; margin-top: 6px; }
   .status.error { color: #f87171; }
   .status.success { color: #86efac; }
   .status.info { color: var(--gold-light); }
-  .loading {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(13,7,32,0.88);
-    z-index: 200;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-  }
+  .loading { display: none; position: fixed; inset: 0; background: rgba(13,7,32,0.88); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
   .loading.show { display: flex; }
-  .spinner {
-    width: 50px; height: 50px;
-    border: 3px solid rgba(201,168,76,0.18);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
-  }
+  .spinner { width: 50px; height: 50px; border: 3px solid rgba(201,168,76,0.18); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.9s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-msg { font-family: 'Cinzel', serif; font-size: 0.78rem; letter-spacing: 0.22em; color: var(--gold); opacity: 0.85; }
-  .loading-sub { font-size: 0.72rem; color: rgba(245,234,216,0.4); }
+  .loading-sub { font-size: 0.72rem; color: rgba(245,234,216,0.4); max-width: 280px; text-align: center; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -300,10 +135,9 @@
       <!-- API Key -->
       <div class="step-card">
         <div class="step-label">設定</div>
-        <div class="step-title">Gemini APIキー</div>
-        <div class="api-row">
-          <input type="password" id="geminiKey" placeholder="AIzaSy... (Gemini APIキーを入力)">
-        </div>
+        <div class="step-title">Groq APIキー</div>
+        <input type="password" id="groqKey" placeholder="gsk_... (Groq APIキーを入力)">
+        <p class="step-note">無料で取得: <a href="https://console.groq.com" target="_blank" style="color:var(--gold)">console.groq.com</a></p>
       </div>
 
       <!-- Step 1 -->
@@ -318,7 +152,7 @@
         <div class="step-label">Step II</div>
         <div class="step-title">キャラクター画像をアップ</div>
         <input type="file" accept="image/*" id="fileInput" style="display:none" onchange="handleFile(event)">
-        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
           <div class="upload-icon">📷</div>
           <div class="upload-text">タップして写真・イラストを選択<br><small>JPG / PNG / WebP</small></div>
         </div>
@@ -337,19 +171,18 @@
           <button class="style-btn selected" data-style="classic" onclick="selectStyle(this)">
             <span class="style-icon">🏛</span>クラシック<br><small style="opacity:0.6">ライダー・ウェイト風</small>
           </button>
-          <button class="style-btn" data-style="anime" onclick="selectStyle(this)">
-            <span class="style-icon">✨</span>アニメ風<br><small style="opacity:0.6">日本的な繊細な絵柄</small>
-          </button>
           <button class="style-btn" data-style="dark" onclick="selectStyle(this)">
             <span class="style-icon">🌑</span>ダーク<br><small style="opacity:0.6">重厚で神秘的</small>
           </button>
-          <button class="style-btn" data-style="watercolor" onclick="selectStyle(this)">
-            <span class="style-icon">🎨</span>水彩風<br><small style="opacity:0.6">柔らかく幻想的</small>
+          <button class="style-btn" data-style="celestial" onclick="selectStyle(this)">
+            <span class="style-icon">🌙</span>天体・宇宙<br><small style="opacity:0.6">星・月・宇宙的</small>
+          </button>
+          <button class="style-btn" data-style="nature" onclick="selectStyle(this)">
+            <span class="style-icon">🌿</span>自然・精霊<br><small style="opacity:0.6">植物・大地・精霊</small>
           </button>
         </div>
       </div>
 
-      <!-- Generate -->
       <button class="btn btn-primary" id="btnGenerate" onclick="generateCard()" disabled>
         ✦ タロットカードを生成する
       </button>
@@ -362,7 +195,7 @@
       <div class="preview-sticky">
         <div class="step-card" style="width:100%;text-align:center;padding:16px 16px 20px;">
           <div class="step-label" style="text-align:center">プレビュー</div>
-          <div id="canvasWrap" style="display:flex;justify-content:center;">
+          <div style="display:flex;justify-content:center;">
             <div class="placeholder-card" id="placeholder">
               <span class="big">✦</span>
               <span>アルカナを選んで<br>画像をアップし<br>生成ボタンを押すと<br>ここに表示されます</span>
@@ -383,35 +216,59 @@
 
 <script>
 const MAJOR_ARCANA = [
-  { num:0,  roman:'0',     en:'The Fool',         ja:'愚者',      meaning:'新しい始まり、冒険、純粋さ',       symbols:'white rose, small dog, cliff edge, colorful bag on stick, bright sun' },
-  { num:1,  roman:'I',     en:'The Magician',     ja:'魔術師',    meaning:'意志力、技術、創造性',             symbols:'wand raised high, cup sword pentacle on table, infinity symbol above head, roses and lilies' },
-  { num:2,  roman:'II',    en:'High Priestess',   ja:'女教皇',    meaning:'直感、神秘、内なる知識',           symbols:'scroll labeled TORA, pillars B and J, crescent moon at feet, pomegranate curtain' },
-  { num:3,  roman:'III',   en:'The Empress',      ja:'女帝',      meaning:'豊穣、美、自然の力',               symbols:'crown of 12 stars, scepter, shield with Venus symbol, lush wheat field, forest' },
-  { num:4,  roman:'IV',    en:'The Emperor',      ja:'皇帝',      meaning:'権威、秩序、父性',                 symbols:'ram heads on throne, orb and scepter, armor, barren mountains behind' },
-  { num:5,  roman:'V',     en:'The Hierophant',   ja:'教皇',      meaning:'伝統、精神的指導、信仰',           symbols:'triple crown, crossed keys, blessing hand, two monks kneeling' },
-  { num:6,  roman:'VI',    en:'The Lovers',       ja:'恋人',      meaning:'愛、選択、結合',                   symbols:'angel Raphael above, radiant sun, couple standing, serpent on tree, flames' },
+  { num:0,  roman:'0',     en:'The Fool',         ja:'愚者',      meaning:'新しい始まり、冒険、純粋さ',       symbols:'white rose, small dog, cliff edge, bright sun, colorful bag on a stick' },
+  { num:1,  roman:'I',     en:'The Magician',     ja:'魔術師',    meaning:'意志力、技術、創造性',             symbols:'wand raised high, cup sword pentacle on table, infinity symbol, roses and lilies' },
+  { num:2,  roman:'II',    en:'High Priestess',   ja:'女教皇',    meaning:'直感、神秘、内なる知識',           symbols:'scroll, two pillars B and J, crescent moon, pomegranate curtain, veil' },
+  { num:3,  roman:'III',   en:'The Empress',      ja:'女帝',      meaning:'豊穣、美、自然の力',               symbols:'crown of 12 stars, scepter, Venus shield, wheat field, lush forest, waterfall' },
+  { num:4,  roman:'IV',    en:'The Emperor',      ja:'皇帝',      meaning:'権威、秩序、父性',                 symbols:'ram head throne, orb and scepter, armor, barren orange mountains' },
+  { num:5,  roman:'V',     en:'The Hierophant',   ja:'教皇',      meaning:'伝統、精神的指導、信仰',           symbols:'triple crown, crossed keys, two pillars, blessing hand, two monks kneeling' },
+  { num:6,  roman:'VI',    en:'The Lovers',       ja:'恋人',      meaning:'愛、選択、結合',                   symbols:'angel Raphael in clouds, radiant sun, man and woman, snake on tree, flames' },
   { num:7,  roman:'VII',   en:'The Chariot',      ja:'戦車',      meaning:'勝利、意志、前進',                 symbols:'black and white sphinxes, star canopy, crescent moons on armor, wand, city walls' },
-  { num:8,  roman:'VIII',  en:'Strength',         ja:'力',        meaning:'勇気、内なる力、忍耐',             symbols:'woman gently holding lion jaw open, infinity symbol above her head, flower garland' },
-  { num:9,  roman:'IX',    en:'The Hermit',       ja:'隠者',      meaning:'孤独、内省、知恵の探求',           symbols:'lantern with six-pointed star, long staff, gray hooded cloak, snowy mountain peak' },
-  { num:10, roman:'X',     en:'Wheel of Fortune', ja:'運命の輪',  meaning:'運命、変化、サイクル',             symbols:'large wheel with TARO letters, sphinx on top, snake descending, Anubis, four corner creatures reading books' },
-  { num:11, roman:'XI',    en:'Justice',          ja:'正義',      meaning:'公正、真実、法則',                 symbols:'balanced scales, upright sword, crown, two pillars, red robe, purple veil' },
-  { num:12, roman:'XII',   en:'The Hanged Man',   ja:'吊られた男',meaning:'犠牲、待機、視点の転換',           symbols:'man hanging upside down from T-shaped cross, serene face with halo, crossed legs, hands behind back' },
-  { num:13, roman:'XIII',  en:'Death',            ja:'死神',      meaning:'変容、終わりと始まり',             symbols:'skeleton in black armor on white horse, white rose flag, fallen king, rising sun between two towers' },
-  { num:14, roman:'XIV',   en:'Temperance',       ja:'節制',      meaning:'調和、バランス、癒し',             symbols:'angel pouring water between two cups, one foot on water one on land, iris flowers, golden triangle in square on chest' },
-  { num:15, roman:'XV',    en:'The Devil',        ja:'悪魔',      meaning:'誘惑、束縛、物質主義',             symbols:'bat wings, inverted pentagram, torch, chained couple below, dark background, horns' },
-  { num:16, roman:'XVI',   en:'The Tower',        ja:'塔',        meaning:'崩壊、啓示、突然の変化',           symbols:'tall tower struck by lightning, crown blown off top, two figures falling, flames, dark stormy sky' },
-  { num:17, roman:'XVII',  en:'The Star',         ja:'星',        meaning:'希望、癒し、インスピレーション',   symbols:'nude woman kneeling by water, large eight-pointed star, seven smaller stars, two water jugs, ibis bird in tree' },
-  { num:18, roman:'XVIII', en:'The Moon',         ja:'月',        meaning:'幻想、無意識、夢',                 symbols:'full moon with face and crescent moons, crayfish emerging from pool, wolf and dog howling, two towers, winding path' },
-  { num:19, roman:'XIX',   en:'The Sun',          ja:'太陽',      meaning:'喜び、成功、活力',                 symbols:'radiant sun with human face, large sunflowers, naked child on white horse, red banner, stone wall' },
-  { num:20, roman:'XX',    en:'Judgement',        ja:'審判',      meaning:'復活、覚醒、解放',                 symbols:'angel Gabriel with trumpet, cross flag, figures rising from coffins in water, mountains in background' },
-  { num:21, roman:'XXI',   en:'The World',        ja:'世界',      meaning:'完成、達成、統合',                 symbols:'dancing nude figure with two wands, large oval wreath, four corner creatures, purple sash' },
+  { num:8,  roman:'VIII',  en:'Strength',         ja:'力',        meaning:'勇気、内なる力、忍耐',             symbols:'woman gently taming a lion, infinity symbol above her head, flower garland, mountains' },
+  { num:9,  roman:'IX',    en:'The Hermit',       ja:'隠者',      meaning:'孤独、内省、知恵の探求',           symbols:'glowing lantern with star, long wooden staff, gray hooded cloak, snowy mountain peak' },
+  { num:10, roman:'X',     en:'Wheel of Fortune', ja:'運命の輪',  meaning:'運命、変化、サイクル',             symbols:'large golden wheel, sphinx on top, snake, Anubis, four winged creatures in corners, clouds' },
+  { num:11, roman:'XI',    en:'Justice',          ja:'正義',      meaning:'公正、真実、法則',                 symbols:'balanced scales in left hand, upright sword in right hand, crown, two stone pillars, red robe' },
+  { num:12, roman:'XII',   en:'The Hanged Man',   ja:'吊られた男',meaning:'犠牲、待機、視点の転換',           symbols:'man suspended upside down from T-cross by one foot, serene halo, crossed legs, calm expression' },
+  { num:13, roman:'XIII',  en:'Death',            ja:'死神',      meaning:'変容、終わりと始まり',             symbols:'skeleton knight in black armor on white horse, white rose flag, fallen king, rising sun between two towers' },
+  { num:14, roman:'XIV',   en:'Temperance',       ja:'節制',      meaning:'調和、バランス、癒し',             symbols:'angel pouring water between two golden cups, one foot on water one on land, iris flowers, golden path to sun' },
+  { num:15, roman:'XV',    en:'The Devil',        ja:'悪魔',      meaning:'誘惑、束縛、物質主義',             symbols:'goat-headed devil on pedestal, bat wings, inverted pentagram, torch, chained couple below' },
+  { num:16, roman:'XVI',   en:'The Tower',        ja:'塔',        meaning:'崩壊、啓示、突然の変化',           symbols:'tall stone tower struck by lightning bolt, golden crown blown off, two figures falling, dark stormy sky, flames' },
+  { num:17, roman:'XVII',  en:'The Star',         ja:'星',        meaning:'希望、癒し、インスピレーション',   symbols:'large eight-pointed star, seven smaller stars, nude woman kneeling by water, two jugs, ibis bird in tree' },
+  { num:18, roman:'XVIII', en:'The Moon',         ja:'月',        meaning:'幻想、無意識、夢',                 symbols:'full moon with face and two crescent moons, crayfish emerging from pool, wolf and dog howling, two distant towers' },
+  { num:19, roman:'XIX',   en:'The Sun',          ja:'太陽',      meaning:'喜び、成功、活力',                 symbols:'radiant sun with face, large sunflowers, naked child on white horse, red banner, stone garden wall' },
+  { num:20, roman:'XX',    en:'Judgement',        ja:'審判',      meaning:'復活、覚醒、解放',                 symbols:'angel Gabriel blowing trumpet, cross banner, figures rising from coffins, mountains, grey sky' },
+  { num:21, roman:'XXI',   en:'The World',        ja:'世界',      meaning:'完成、達成、統合',                 symbols:'dancing figure with two wands, large laurel wreath oval, four winged creatures in corners, purple flowing sash' },
 ];
 
-const STYLE_PROMPTS = {
-  classic:    'classical tarot card illustration, detailed pen and watercolor in the style of Pamela Colman Smith, art nouveau influence, symbolic imagery, muted earthy tones with gold accents',
-  anime:      'Japanese anime illustration style, beautiful detailed character art, vibrant colors, magical and mystical anime aesthetic, delicate linework, Studio Ghibli inspired',
-  dark:       'dark gothic fantasy illustration, dramatic chiaroscuro lighting, deep shadows, ornate gothic elements, ominous mystical atmosphere, detailed oil painting style',
-  watercolor: 'soft ethereal watercolor illustration, dreamy pastel colors, loose expressive brushstrokes, magical atmosphere, impressionistic, delicate gradients',
+const STYLE_CONFIGS = {
+  classic: {
+    label: 'クラシック',
+    palette: ['#1a0a3e','#2d1b6b','#4a2d8a','#c9a84c','#e8cc7a','#f5ead8','#8b4513','#d4a017'],
+    bg: '#1a0a3e',
+    accent: '#c9a84c',
+    desc: 'classical tarot card with golden decorative borders, aged parchment tones, art nouveau ornamental details'
+  },
+  dark: {
+    label: 'ダーク',
+    palette: ['#0a0a0a','#1a0520','#2d0a3a','#8b0000','#c0392b','#9b59b6','#2ecc71','#c9a84c'],
+    bg: '#0d0010',
+    accent: '#9b59b6',
+    desc: 'dark gothic tarot with deep shadows, crimson and purple tones, ornate gothic arch borders, dramatic chiaroscuro'
+  },
+  celestial: {
+    label: '天体・宇宙',
+    palette: ['#000820','#0a1628','#1a2a4a','#4a6fa5','#7ab3d4','#e8e0ff','#c9a84c','#fff8dc'],
+    bg: '#000820',
+    accent: '#7ab3d4',
+    desc: 'celestial tarot with deep space background, stars and nebulae, silver and blue tones, cosmic mystical borders'
+  },
+  nature: {
+    label: '自然・精霊',
+    palette: ['#0a1a0a','#1a3a1a','#2d5a2d','#4a8a4a','#90c080','#c9a84c','#8b4513','#f5e6c8'],
+    bg: '#0a1a0a',
+    accent: '#90c080',
+    desc: 'nature spirit tarot with forest greens, earth tones, botanical vine borders, fairy tale woodland atmosphere'
+  },
 };
 
 let selectedCard = null;
@@ -470,212 +327,258 @@ function checkReady() {
 }
 
 async function generateCard() {
-  const apiKey = document.getElementById('geminiKey').value.trim();
-  if (!apiKey) { setStatus('generateStatus', 'Gemini APIキーを入力してください', 'error'); return; }
+  const apiKey = document.getElementById('groqKey').value.trim();
+  if (!apiKey) { setStatus('generateStatus', 'Groq APIキーを入力してください', 'error'); return; }
   if (!selectedCard || !userImageBase64) return;
 
-  showLoading(true, 'CHECKING...', '利用可能なモデルを確認中...');
+  showLoading(true, 'ANALYZING...', 'Step 1/2: 画像のキャラクターを分析中...');
   setStatus('generateStatus', '');
 
   try {
-    // Step 1: ListModels で画像生成対応モデルを探す
-    const listResp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`
-    );
-    if (!listResp.ok) {
-      const e = await listResp.json().catch(() => ({}));
-      throw new Error('APIキーが無効です: ' + (e.error?.message || listResp.status));
-    }
-    const listData = await listResp.json();
-    const allModels = (listData.models || []).map(m => m.name.replace('models/', ''));
-    console.log('利用可能なモデル:', allModels);
+    // Step 1: Groq Vision でキャラクターを分析
+    const visionResp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+        max_tokens: 600,
+        messages: [{
+          role: 'user',
+          content: [
+            {
+              type: 'image_url',
+              image_url: { url: `data:${userImageMime};base64,${userImageBase64}` }
+            },
+            {
+              type: 'text',
+              text: `Analyze this image and describe the main subject for SVG illustration purposes. Be specific about:
+1. Character type (human/animal/creature/object) and gender if applicable
+2. Key visual features: hair color/style, eye color, skin tone, distinctive features
+3. Clothing/outfit: colors, style, notable accessories
+4. Pose or position
+5. Overall mood/aura (mystical, fierce, gentle, etc.)
+6. Color palette (main 3-4 colors)
 
-    // 画像生成対応モデルの候補（優先順）
-    const IMAGE_MODEL_KEYWORDS = [
-      'gemini-3.1-flash-image',
-      'gemini-3-flash-image',
-      'gemini-3-pro-image',
-      'gemini-2.5-flash-image',
-      'gemini-2.0-flash-preview-image',
-      'gemini-2.0-flash-exp',
-    ];
-    const candidateModels = [];
-    for (const keyword of IMAGE_MODEL_KEYWORDS) {
-      const found = allModels.find(m => m.includes(keyword) && !m.includes('imagen'));
-      if (found && !candidateModels.includes(found)) candidateModels.push(found);
-    }
-
-    if (candidateModels.length === 0) {
-      throw new Error(
-        `このAPIキーで画像生成モデルが見つかりませんでした。\n利用可能なモデル: ${allModels.slice(0,5).join(', ')} ...\n\nGoogle AI Studioで画像生成が有効か確認してください。`
-      );
-    }
-
-    const stylePrompt = STYLE_PROMPTS[selectedStyle];
-    const prompt = `You are given a reference image of a character or subject. Create a tarot card illustration for the "${selectedCard.en}" (${selectedCard.ja}) card.
-
-Style: ${stylePrompt}
-
-Instructions:
-- Reimagine the character/subject from the reference image as the central figure of the ${selectedCard.en} tarot card
-- Preserve key features of the character (appearance, colors, essence) while transforming them into tarot card art
-- Incorporate traditional ${selectedCard.en} symbolism: ${selectedCard.symbols}
-- The card meaning is: ${selectedCard.meaning}
-- Portrait orientation (like a tarot card, taller than wide)
-- Include an ornate decorative border typical of tarot cards
-- Add the Roman numeral "${selectedCard.roman}" subtly at the top
-- Rich mystical atmosphere with deep colors and gold accents
-- Do NOT include any text labels or card names in the image`;
-
-    // Step 2: 候補モデルを順番に試す
-    let data = null;
-    let lastError = '';
-    for (const model of candidateModels) {
-      setLoadingMsg('GENERATING...', `生成中: ${model}`);
-      const resp = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [
-                { inline_data: { mime_type: userImageMime, data: userImageBase64 } },
-                { text: prompt }
-              ]
-            }],
-            generation_config: {
-              response_modalities: ['IMAGE', 'TEXT']
+Reply in English, concisely in 80 words max.`
             }
-          })
-        }
-      );
-      if (resp.ok) {
-        data = await resp.json();
-        break;
-      } else {
-        const errBody = await resp.json().catch(() => ({}));
-        lastError = errBody.error?.message || `HTTP ${resp.status}`;
-        console.warn(`❌ ${model} 失敗 (${resp.status}):`, lastError);
+          ]
+        }]
+      })
+    });
+
+    if (!visionResp.ok) {
+      const e = await visionResp.json().catch(() => ({}));
+      throw new Error('画像分析失敗: ' + (e.error?.message || visionResp.status));
+    }
+    const visionData = await visionResp.json();
+    const charDescription = visionData.choices[0].message.content;
+    console.log('キャラクター分析:', charDescription);
+
+    // Step 2: SVGタロットカード生成
+    setLoadingMsg('GENERATING...', 'Step 2/2: タロットカードSVGを生成中...');
+
+    const style = STYLE_CONFIGS[selectedStyle];
+    const paletteStr = style.palette.join(', ');
+
+    const svgPrompt = `Create a detailed SVG tarot card illustration. Output ONLY the SVG code, nothing else.
+
+Card: ${selectedCard.en} (${selectedCard.ja}) — Roman numeral: ${selectedCard.roman}
+Card meaning: ${selectedCard.meaning}
+Card symbols: ${selectedCard.symbols}
+
+Character to illustrate (main subject of the card):
+${charDescription}
+
+Style: ${style.desc}
+Color palette (use these colors): ${paletteStr}
+Background color: ${style.bg}
+Accent color: ${style.accent}
+
+SVG Requirements:
+- viewBox="0 0 280 480" (portrait tarot card proportions)
+- Background: filled with ${style.bg}
+- Decorative border: ornate rectangular frame using accent color ${style.accent}, with corner ornaments
+- Roman numeral "${selectedCard.roman}" at top center in accent color
+- Card name "${selectedCard.ja}" at bottom center
+- Main illustration area: character adapted to embody ${selectedCard.en} archetype
+- Include at least 3-4 symbolic elements from: ${selectedCard.symbols}
+- Character should be recognizable from description but rendered in tarot illustration style
+- Use gradients and layered shapes for depth
+- Total SVG should be rich and detailed with 30+ elements
+
+Output the complete SVG starting with <svg and ending with </svg>. No markdown, no explanation.`;
+
+    const svgResp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model: 'moonshotai/kimi-k2-instruct',
+        max_tokens: 8000,
+        temperature: 0.7,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an expert SVG artist specializing in tarot card illustration. You create detailed, beautiful SVG artwork. Always output complete, valid SVG code only — no markdown code blocks, no explanation text.'
+          },
+          { role: 'user', content: svgPrompt }
+        ]
+      })
+    });
+
+    if (!svgResp.ok) {
+      const e = await svgResp.json().catch(() => ({}));
+      // fallback to llama if kimi fails
+      if (svgResp.status === 404 || svgResp.status === 400) {
+        return await generateWithFallback(apiKey, svgPrompt);
       }
+      throw new Error('SVG生成失敗: ' + (e.error?.message || svgResp.status));
     }
 
-    if (!data) throw new Error(`画像生成失敗。試したモデル: ${candidateModels.join(', ')}\n最後のエラー: ${lastError}`);
-
-    const parts = data.candidates?.[0]?.content?.parts || [];
-    const imgPart = parts.find(p => p.inline_data?.mime_type?.startsWith('image/'));
-
-    if (!imgPart) {
-      const textPart = parts.find(p => p.text);
-      throw new Error(textPart?.text || '画像が返されませんでした');
-    }
-
-    const genDataUrl = `data:${imgPart.inline_data.mime_type};base64,${imgPart.inline_data.data}`;
-    await drawFinalCard(genDataUrl);
-
-    document.getElementById('btnPng').disabled = false;
-    document.getElementById('btnJpg').disabled = false;
-    document.getElementById('btnShare').disabled = false;
-    setStatus('previewStatus', `✓ ${selectedCard.ja} のカードが完成しました`, 'success');
+    const svgData = await svgResp.json();
+    let svgText = svgData.choices[0].message.content;
+    await renderSVGCard(svgText);
 
   } catch(e) {
     setStatus('generateStatus', '生成失敗: ' + e.message, 'error');
     console.error(e);
+    showLoading(false);
   }
-
-  showLoading(false);
 }
 
-async function drawFinalCard(imageDataUrl) {
+async function generateWithFallback(apiKey, svgPrompt) {
+  setLoadingMsg('GENERATING...', 'Step 2/2: フォールバックモデルで生成中...');
+  const svgResp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      max_tokens: 8000,
+      temperature: 0.7,
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert SVG artist specializing in tarot card illustration. Output complete valid SVG code only — no markdown, no explanation.'
+        },
+        { role: 'user', content: svgPrompt }
+      ]
+    })
+  });
+  if (!svgResp.ok) {
+    const e = await svgResp.json().catch(() => ({}));
+    throw new Error('SVG生成失敗: ' + (e.error?.message || svgResp.status));
+  }
+  const svgData = await svgResp.json();
+  const svgText = svgData.choices[0].message.content;
+  await renderSVGCard(svgText);
+}
+
+async function renderSVGCard(svgText) {
+  // SVGを抽出
+  const match = svgText.match(/<svg[\s\S]*<\/svg>/i);
+  if (!match) throw new Error('SVGの生成に失敗しました。再度お試しください。');
+  const svgClean = match[0];
+
+  // SVG → Canvas
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
+
+  const blob = new Blob([svgClean], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
 
   await new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
       ctx.clearRect(0, 0, W, H);
-      // Fill canvas with generated image (cover)
-      const scale = Math.max(W / img.width, H / img.height);
-      const sw = img.width * scale, sh = img.height * scale;
-      ctx.drawImage(img, (W - sw) / 2, (H - sh) / 2, sw, sh);
-      // Draw card frame overlay
+      ctx.drawImage(img, 0, 0, W, H);
+      URL.revokeObjectURL(url);
       drawCardFrame(ctx, W, H);
       resolve();
     };
-    img.onerror = reject;
-    img.src = imageDataUrl;
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('SVGの描画に失敗しました'));
+    };
+    img.src = url;
   });
 
   canvas.style.display = 'block';
   document.getElementById('placeholder').style.display = 'none';
+  document.getElementById('btnPng').disabled = false;
+  document.getElementById('btnJpg').disabled = false;
+  document.getElementById('btnShare').disabled = false;
+  setStatus('previewStatus', `✓ ${selectedCard.ja} のカードが完成しました`, 'success');
+  showLoading(false);
 }
 
 function drawCardFrame(ctx, W, H) {
-  const pad = 8;
+  const pad = 7;
+  const style = STYLE_CONFIGS[selectedStyle];
 
-  // Subtle vignette
-  const vig = ctx.createRadialGradient(W/2, H/2, H*0.28, W/2, H/2, H*0.72);
+  // Vignette
+  const vig = ctx.createRadialGradient(W/2, H/2, H*0.25, W/2, H/2, H*0.75);
   vig.addColorStop(0, 'rgba(0,0,0,0)');
-  vig.addColorStop(1, 'rgba(0,0,0,0.42)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.35)');
   ctx.fillStyle = vig;
   ctx.fillRect(0, 0, W, H);
 
-  // Outer gold border
-  ctx.strokeStyle = 'rgba(201,168,76,0.92)';
+  // Outer border
+  ctx.strokeStyle = style.accent;
   ctx.lineWidth = 2.5;
-  roundRect(ctx, pad, pad, W - pad*2, H - pad*2, 7);
+  ctx.globalAlpha = 0.9;
+  roundRect(ctx, pad, pad, W-pad*2, H-pad*2, 8);
   ctx.stroke();
 
   // Inner border
-  ctx.strokeStyle = 'rgba(201,168,76,0.32)';
+  ctx.strokeStyle = style.accent;
   ctx.lineWidth = 1;
-  roundRect(ctx, pad+5, pad+5, W - (pad+5)*2, H - (pad+5)*2, 4);
+  ctx.globalAlpha = 0.35;
+  roundRect(ctx, pad+5, pad+5, W-(pad+5)*2, H-(pad+5)*2, 5);
   ctx.stroke();
+  ctx.globalAlpha = 1;
 
-  // Top dark band
-  ctx.fillStyle = 'rgba(8,3,20,0.75)';
-  roundRect(ctx, pad+1, pad+1, W - (pad+1)*2, 34, 5);
-  ctx.fill();
+  // Top band
+  ctx.fillStyle = 'rgba(0,0,0,0.7)';
+  ctx.fillRect(pad+1, pad+1, W-(pad+1)*2, 32);
 
-  // Bottom dark band
-  ctx.fillStyle = 'rgba(8,3,20,0.75)';
-  ctx.beginPath();
-  ctx.rect(pad+1, H - pad - 36, W - (pad+1)*2, 35);
-  ctx.fill();
+  // Bottom band
+  ctx.fillStyle = 'rgba(0,0,0,0.7)';
+  ctx.fillRect(pad+1, H-pad-33, W-(pad+1)*2, 32);
 
   // Corner dots
   [[pad+3,pad+3],[W-pad-3,pad+3],[pad+3,H-pad-3],[W-pad-3,H-pad-3]].forEach(([x,y]) => {
-    ctx.fillStyle = 'rgba(201,168,76,0.9)';
-    ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = style.accent;
+    ctx.globalAlpha = 0.9;
+    ctx.beginPath(); ctx.arc(x,y,2.5,0,Math.PI*2); ctx.fill();
   });
+  ctx.globalAlpha = 1;
 
-  // Roman numeral (top center)
+  // Roman numeral
   ctx.font = 'bold 13px Georgia, serif';
-  ctx.fillStyle = 'rgba(201,168,76,0.95)';
+  ctx.fillStyle = style.accent;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText(selectedCard.roman, W/2, pad + 18);
+  ctx.fillText(selectedCard.roman, W/2, pad+17);
 
-  // Japanese name (bottom)
+  // Japanese name
   ctx.font = 'bold 13px sans-serif';
   ctx.fillStyle = 'rgba(245,234,216,0.95)';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(selectedCard.ja, W/2, H - pad - 22);
+  ctx.fillText(selectedCard.ja, W/2, H-pad-20);
 
   // English name
   ctx.font = '9px Georgia, serif';
-  ctx.fillStyle = 'rgba(201,168,76,0.68)';
-  ctx.fillText(selectedCard.en.toUpperCase(), W/2, H - pad - 9);
+  ctx.fillStyle = style.accent;
+  ctx.globalAlpha = 0.7;
+  ctx.fillText(selectedCard.en.toUpperCase(), W/2, H-pad-8);
+  ctx.globalAlpha = 1;
 }
 
 function roundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.lineTo(x+w-r, y); ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-  ctx.lineTo(x+w, y+h-r); ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-  ctx.lineTo(x+r, y+h); ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-  ctx.lineTo(x, y+r); ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
   ctx.closePath();
 }
 
@@ -712,7 +615,7 @@ function setLoadingMsg(msg, sub) {
 function setStatus(id, msg, type) {
   const el = document.getElementById(id);
   el.textContent = msg;
-  el.className = 'status' + (type ? ' ' + type : '');
+  el.className = 'status' + (type ? ' '+type : '');
 }
 </script>
 </body>
