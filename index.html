@@ -676,7 +676,11 @@ async function shareCard() {
 
 function showLoading(v, msg, sub) {
   document.getElementById('loading').classList.toggle('show', v);
-  if (msg) { document.getElementById('loadingMsg').textContent = msg; document.getElementById('loadingSub').textContent = sub || ''; }
+  if (msg) setLoadingMsg(msg, sub);
+}
+function setLoadingMsg(msg, sub) {
+  document.getElementById('loadingMsg').textContent = msg;
+  document.getElementById('loadingSub').textContent = sub || '';
 }
 function setStatus(id, msg, type) {
   const el = document.getElementById(id);
